@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+import { randomBytes } from "crypto";
 import { parseUpload, validate } from "./upload.js";
+import { processImage } from "./image.js";
+import { createPhotoPR } from "./github.js";
 
 var allowedOrigin = process.env.ALLOWED_ORIGIN || "https://berry.kevcreates.art";
 
@@ -49,11 +52,31 @@ app.post("/upload", uploadLimiter, async function (req, res) {
   var name = req.body.name.trim();
   var caption = req.body.caption.trim();
 
-  // Image processing and GitHub PR creation will be wired in Task 10
-  res.json({
-    success: true,
-    message: "Thanks! Your photo of Berry will appear after review.",
-  });
+  try {
+    var processed = await processImage(req.file.buffer);
+    var id = randomBytes(2).toString("hex");
+    var today = new Date().toISOString().slice(0, 10);
+    var filename = "berry-" + today + "-" + id + processed.ext;
+
+    await createPhotoPR({
+      imageBuffer: processed.buffer,
+      filename: filename,
+      name: name,
+      caption: caption,
+      date: today,
+    });
+
+    res.json({
+      success: true,
+      message: "Thanks! Your photo of Berry will appear after review.",
+    });
+  } catch (err) {
+    console.error("Upload failed:", err);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again.",
+    });
+  }
 });
 
 var port = process.env.PORT || 3100;
