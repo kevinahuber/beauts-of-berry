@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beauts of Berry</title>
+  <meta name="description" content="A community gallery of Berry the axolotl. Share your photos!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <h1>Beauts of Berry</h1>
+    <p class="tagline">A community gallery for the world's cutest axolotl</p>
+  </header>
+
+  <main id="main">
+    <section class="gallery" aria-label="Photo gallery">
+      <div id="gallery-feed" class="gallery-feed">
+        <!-- Rendered by app.js -->
+      </div>
+      <p id="gallery-empty" class="gallery-empty" hidden>
+        No photos yet! Be the first to share a photo of Berry.
+      </p>
+    </section>
+
+    <section class="upload-section" aria-label="Upload a photo">
+      <h2>Share a photo of Berry!</h2>
+
+      <form id="upload-form" class="upload-form" novalidate>
+        <div
+          class="dropzone"
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Choose a photo to upload. Drag and drop or press Enter to browse."
+        >
+          <span class="dropzone-icon" aria-hidden="true">📸</span>
+          <span class="dropzone-text">Drag &amp; drop a photo here, or click to choose</span>
+          <input
+            type="file"
+            id="file-input"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+            aria-label="Choose photo file"
+          >
+        </div>
+
+        <div id="preview" class="preview" hidden>
+          <img id="preview-img" alt="Preview of your selected photo">
+          <button type="button" id="remove-photo" class="remove-btn" aria-label="Remove selected photo">Remove</button>
+        </div>
+
+        <label for="name-input" class="form-label">Your name</label>
+        <input
+          type="text"
+          id="name-input"
+          name="name"
+          class="form-input"
+          maxlength="100"
+          required
+          placeholder="e.g. Berry Fan #1"
+        >
+
+        <label for="caption-input" class="form-label">Caption</label>
+        <input
+          type="text"
+          id="caption-input"
+          name="caption"
+          class="form-input"
+          maxlength="280"
+          required
+          placeholder="e.g. Berry doing a blep"
+        >
+
+        <button type="submit" id="submit-btn" class="submit-btn">
+          Share photo
+        </button>
+
+        <div id="form-status" class="form-status" role="status" aria-live="polite" hidden></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Made with love for Berry the axolotl</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
